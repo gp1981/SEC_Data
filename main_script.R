@@ -13,6 +13,9 @@ source("Functions/data_analysis.R")
 source("Functions/data_visualization.R")
 source("Functions/utils.R")
 
+
+# Retrieve data from SEC --------------------------------------------------
+
 # Define user headers
 headers <- c('User-Agent' = 'email@address.com')
 
@@ -23,6 +26,25 @@ company_List <- retrieve_Company_List(headers)
 cik <- company_List$cik[1]
 
 company_Data <- retrieve_Company_Data(headers, cik)
+
+# Explore data retrieved from SEC -----------------------------------------
+
+# Assuming you have successfully retrieved company_Data
+company_Metadata <- company_Data$company_Metadata
+company_Facts <- company_Data$company_Facts
+company_Concept <- company_Data$company_Concept
+
+# Create a DataFrame with relevant data
+company_df <- data.frame(
+  CIK = cik,
+  Name = company_Metadata$name,
+  FiscalYearEnd = company_Metadata$fiscalYearEnd,
+  AssetsLabel = company_Facts$facts$`us-gaap`$Assets$label,
+  AssetsDescription = company_Facts$facts$`us-gaap`$Assets$description
+  # Add more relevant fields here
+)
+
+
 
 
 

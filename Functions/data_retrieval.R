@@ -10,6 +10,13 @@ library(jsonlite)
 retrieve_Company_List <- function(headers) {
   # Retrieve company tickers list
   company_Tickers <- GET("https://www.sec.gov/files/company_tickers.json", add_headers(headers))
+  
+  # Check for HTTP errors
+  if (http_error(company_Tickers)) {
+    stop("Failed to retrieve company list. HTTP error: ", http_status(company_Tickers)$message)
+  }
+  
+  # Proceed with data extraction
   company_Tickers_List <- fromJSON(content(company_Tickers, "text"))
   
   # Convert the JSON list to a data frame
@@ -22,9 +29,14 @@ retrieve_Company_List <- function(headers) {
 }
 
 # Function to retrieve company data
-retrieve_Company_Data <- function(headers, cik){
+retrieve_Company_Data <- function(headers, cik) {
   # Retrieve company metadata
   company_Metadata <- GET(paste0("https://data.sec.gov/submissions/CIK", cik, ".json"), add_headers(headers))
+  
+  # Check for HTTP errors in company_Metadata request
+  if (http_error(company_Metadata)) {
+    stop("Failed to retrieve company metadata. HTTP error: ", http_status(company_Metadata)$message)
+  }
   
   # Process and adjust JSON data
   company_Metadata <- fromJSON(content(company_Metadata, "text"))
@@ -32,11 +44,21 @@ retrieve_Company_Data <- function(headers, cik){
   # Retrieve company facts
   company_Facts <- GET(paste0("https://data.sec.gov/api/xbrl/companyfacts/CIK", cik, ".json"), add_headers(headers))
   
+  # Check for HTTP errors in company_Facts request
+  if (http_error(company_Facts)) {
+    stop("Failed to retrieve company facts. HTTP error: ", http_status(company_Facts)$message)
+  }
+  
   # Process and adjust JSON data
   company_Facts <- fromJSON(content(company_Facts, "text"))
   
   # Retrieve company facts
   company_Concept <- GET(paste0("https://data.sec.gov/api/xbrl/companyconcept/CIK", cik, "/us-gaap/Assets.json"), add_headers(headers))
+  
+  # Check for HTTP errors in company_Concept request
+  if (http_error(company_Concept)) {
+    stop("Failed to retrieve company concept data. HTTP error: ", http_status(company_Concept)$message)
+  }
   
   # Process and adjust JSON data
   company_Concept <- fromJSON(content(company_Concept, "text"))
@@ -49,18 +71,4 @@ retrieve_Company_Data <- function(headers, cik){
   )
   return(company_Data)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
