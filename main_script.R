@@ -13,5 +13,16 @@ source("Functions/data_analysis.R")
 source("Functions/data_visualization.R")
 source("Functions/utils.R")
 
+# Define user headers
+headers <- c('User-Agent' = 'email@address.com')
+
 # Retrieve company data
-CompanyData <- retrieveCompanyData()
+company_List <- retrieve_Company_List(headers)
+
+# Retrieve company information
+cik <- company_List$cik[1]
+
+company_Data <- retrieve_Company_Data(headers, cik)
+
+
+

@@ -6,19 +6,61 @@
 library(httr)
 library(jsonlite)
 
-# Function to retrieve company data
-retrieveCompanyData <- function() {
+# Function to retrieve list of companies
+retrieve_Company_List <- function(headers) {
   # Retrieve company tickers list
-  headers <- add_headers(User_Agent = 'email@address.com')
   company_Tickers <- GET("https://www.sec.gov/files/company_tickers.json", add_headers(headers))
   company_Tickers_List <- fromJSON(content(company_Tickers, "text"))
-
+  
   # Convert the JSON list to a data frame
-  company_Data <- as.data.frame(t(sapply(company_Tickers_List, unlist)), stringsAsFactors = FALSE)
-  colnames(company_Data) <- c("cik_str", "ticker", "title") # Define names of variables
-
+  company_List <- as.data.frame(t(sapply(company_Tickers_List, unlist)), stringsAsFactors = FALSE)
+  
   # Add zeros to CIK
-  company_Data$cik_str <- sprintf("%010s", company_Data$cik_str)
+  company_List$cik_str <- sprintf("%010s", company_List$cik_str)
+  
+  return(company_List)
+}
 
+# Function to retrieve company data
+retrieve_Company_Data <- function(headers, cik){
+  # Retrieve company metadata
+  company_Metadata <- GET(paste0("https://data.sec.gov/submissions/CIK", cik, ".json"), add_headers(headers))
+  
+  # Process and adjust JSON data
+  company_Metadata <- fromJSON(content(company_Metadata, "text"))
+  
+  # Retrieve company facts
+  company_Facts <- GET(paste0("https://data.sec.gov/api/xbrl/companyfacts/CIK", cik, ".json"), add_headers(headers))
+  
+  # Process and adjust JSON data
+  company_Facts <- fromJSON(content(company_Facts, "text"))
+  
+  # Retrieve company facts
+  company_Concept <- GET(paste0("https://data.sec.gov/api/xbrl/companyconcept/CIK", cik, "/us-gaap/Assets.json"), add_headers(headers))
+  
+  # Process and adjust JSON data
+  company_Concept <- fromJSON(content(company_Concept, "text"))
+  
+  # Prepare output
+  company_Data <- list(
+    company_Metadata = company_Metadata,
+    company_Facts = company_Facts,
+    company_Concept = company_Concept
+  )
   return(company_Data)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
