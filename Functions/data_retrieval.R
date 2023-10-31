@@ -6,7 +6,9 @@
 library(httr)
 library(jsonlite)
 
-# Function to retrieve list of companies
+
+# Function to retrieve list of companies ----------------------------------
+
 retrieve_Company_List <- function(headers) {
   # Retrieve company tickers list
   company_Tickers <- GET("https://www.sec.gov/files/company_tickers.json", add_headers(headers))
@@ -28,7 +30,9 @@ retrieve_Company_List <- function(headers) {
   return(company_List)
 }
 
-# Function to retrieve company data
+
+# Function to retrieve company data ---------------------------------------
+
 retrieve_Company_Data <- function(headers, cik) {
   # Retrieve company metadata
   company_Metadata <- GET(paste0("https://data.sec.gov/submissions/CIK", cik, ".json"), add_headers(headers))

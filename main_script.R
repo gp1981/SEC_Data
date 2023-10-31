@@ -45,6 +45,41 @@ company_df <- data.frame(
 )
 
 
+## Company Metadata --------------------------------------------------------
+# This includes general information about the company, such as its name and fiscal year end date.
+company_Metadata <- company_Data$company_Metadata
+company_Metadata$name        # Company name
+company_Metadata$fiscalYearEnd  # Fiscal year end date
+names(company_Metadata)
+
+
+## Company Facts -----------------------------------------------------------
+# These are specific financial facts reported by the company. You can access them based on their labels, e.g., "Assets."
+company_Facts <- company_Data$company_Facts
+
+assets_fact <- company_Facts$facts$`us-gaap`$Assets
+names(assets_fact)
+head(assets_fact)
+
+assets_label <- assets_fact$label          # Label of the fact ("Assets")
+assets_description <- assets_fact$description  # Description of the fact
+
+names(company_Facts$facts$dei)
+names(company_Facts$facts$`us-gaap`)
+
+fact_df <-facts_to_dataframe(company_Facts)
+
+## Company Concepts --------------------------------------------------------
+# This contains detailed information related to a specific concept (e.g., "Assets"). You can access facts under this concept.
+
+company_Concept <- company_Data$company_Concept
+us_gaap_assets_facts <- company_Concept$tag  # Access the "Assets" concept
+
+
+# A simplified balance sheet ------------------------------------------------------
+
+
+
 
 
 
