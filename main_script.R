@@ -19,7 +19,7 @@ source("Functions/utils.R")
 # Define user headers
 headers <- c('User-Agent' = 'email@address.com')
 
-# Retrieve company data
+# Retrieve company list
 company_List <- retrieve_Company_List(headers)
 
 # Retrieve company information

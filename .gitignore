@@ -7,13 +7,14 @@
 # User-specific files
 .Ruserdata
 # Example code in package build process
-*-Ex.R
+*-Ex.Rs
 # Output files from R CMD build
 /*.tar.gz
 # Output files from R CMD check
 /*.Rcheck/
 # RStudio files
 .Rproj.user/
+*.Rproj
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
@@ -29,9 +30,9 @@ vignettes/*.pdf
 .Renviron
 # pkgdown site
 docs/
-# translation temp files
-po/*~
-# RStudio Connect folder
-rsconnect/
-.DS_Store
-SEC_Data.Rproj
+
+# Ignore the output of rendering
+/output/
+
+# But keep /docs in the repository
+!/docs/
