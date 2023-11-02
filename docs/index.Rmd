@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: "SEC Data analysis"
 output: github_document
 ---
 
@@ -7,13 +7,15 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Purpose of this project {#Purpose of this project}
+
+### SEC Data analysis with R
+
+The primary purpose of this project is to retrieve company data from SEC filings and analyze it for educational and research purposes. Please note that the scripts provided here are not intended for making investment decisions, and their use is at your own risk.
+
 ## DISCLAIMER {#sec-disclaimer}
 
 *This financial data retrieval code is provided for informational purposes only, and we make no warranties regarding the accuracy, completeness, or timeliness of the data. It should not be considered financial advice, and users should consult with qualified professionals for personalized guidance. Data is obtained from various sources, including the SEC, and we do not guarantee its accuracy or availability. Users are responsible for assessing and managing risks associated with the financial data. We are not liable for any damages arising from the use of this data or code. Redistribution, resale, or republication of the data without authorization is prohibited. This disclaimer is subject to change, and users are responsible for staying updated. It is not legal advice, and compliance with applicable laws and regulations is the user's responsibility.*
-
-## SEC Data analysis with R
-
-The primary purpose of this project is to retrieve company data from SEC filings and analyze it for educational and research purposes. Please note that the scripts provided here are not intended for making investment decisions, and their use is at your own risk.
 
 ## Setup libraries {#sec-setup-libraries}
 
@@ -77,7 +79,7 @@ company_df <- data.frame(
 print(company_df)
 ```
 
-### Structure of the SEC data: XBRL 
+### Structure of the SEC data: XBRL
 
 The structure the data retrieved from SEC Api is a structured financial data in compliance with SEC reporting standards. It's organized this way to ensure consistency and comparability of financial data across different companies and filings.
 
