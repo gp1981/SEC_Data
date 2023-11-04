@@ -1,5 +1,14 @@
-index
+SEC Data analysis
 ================
+
+## Purpose of this project {#Purpose of this project}
+
+### SEC Data analysis with R
+
+The primary purpose of this project is to retrieve company data from SEC
+filings and analyze it for educational and research purposes. Please
+note that the scripts provided here are not intended for making
+investment decisions, and their use is at your own risk.
 
 ## DISCLAIMER
 
@@ -16,13 +25,6 @@ the data without authorization is prohibited. This disclaimer is subject
 to change, and users are responsible for staying updated. It is not
 legal advice, and compliance with applicable laws and regulations is the
 user’s responsibility.*
-
-## SEC Data analysis with R
-
-The primary purpose of this project is to retrieve company data from SEC
-filings and analyze it for educational and research purposes. Please
-note that the scripts provided here are not intended for making
-investment decisions, and their use is at your own risk.
 
 ## Setup libraries
 
@@ -58,10 +60,10 @@ library(jsonlite)
 Sourcing required files in your main_script.R (here commented)
 
 ``` r
-source("../Functions/data_retrieval.R")
-source("../Functions/data_analysis.R")
-source("../Functions/data_visualization.R")
-source("../Functions/utils.R")
+source("../code/Functions/data_retrieval.R")
+source("../code/Functions/data_analysis.R")
+source("../code/Functions/data_visualization.R")
+source("../code/Functions/utils.R")
 ```
 
 ## Retrieve data from SEC
@@ -236,15 +238,15 @@ str(assets_fact) # it shows the structure of the List "asset_fact"
     ##  $ label      : chr "Assets"
     ##  $ description: chr "Sum of the carrying amounts as of the balance sheet date of all assets that are recognized. Assets are probable"| __truncated__
     ##  $ units      :List of 1
-    ##   ..$ USD:'data.frame':  122 obs. of  8 variables:
-    ##   .. ..$ end  : chr [1:122] "2008-09-27" "2008-09-27" "2008-09-27" "2008-09-27" ...
-    ##   .. ..$ val  : num [1:122] 3.96e+10 3.96e+10 3.62e+10 3.62e+10 4.81e+10 ...
-    ##   .. ..$ accn : chr [1:122] "0001193125-09-153165" "0001193125-09-214859" "0001193125-10-012091" "0001193125-10-238044" ...
-    ##   .. ..$ fy   : int [1:122] 2009 2009 2009 2010 2009 2009 2010 2009 2010 2010 ...
-    ##   .. ..$ fp   : chr [1:122] "Q3" "FY" "FY" "FY" ...
-    ##   .. ..$ form : chr [1:122] "10-Q" "10-K" "10-K/A" "10-K" ...
-    ##   .. ..$ filed: chr [1:122] "2009-07-22" "2009-10-27" "2010-01-25" "2010-10-27" ...
-    ##   .. ..$ frame: chr [1:122] NA NA NA "CY2008Q3I" ...
+    ##   ..$ USD:'data.frame':  124 obs. of  8 variables:
+    ##   .. ..$ end  : chr [1:124] "2008-09-27" "2008-09-27" "2008-09-27" "2008-09-27" ...
+    ##   .. ..$ val  : num [1:124] 3.96e+10 3.96e+10 3.62e+10 3.62e+10 4.81e+10 ...
+    ##   .. ..$ accn : chr [1:124] "0001193125-09-153165" "0001193125-09-214859" "0001193125-10-012091" "0001193125-10-238044" ...
+    ##   .. ..$ fy   : int [1:124] 2009 2009 2009 2010 2009 2009 2010 2009 2010 2010 ...
+    ##   .. ..$ fp   : chr [1:124] "Q3" "FY" "FY" "FY" ...
+    ##   .. ..$ form : chr [1:124] "10-Q" "10-K" "10-K/A" "10-K" ...
+    ##   .. ..$ filed: chr [1:124] "2009-07-22" "2009-10-27" "2010-01-25" "2010-10-27" ...
+    ##   .. ..$ frame: chr [1:124] NA NA NA "CY2008Q3I" ...
 
 This list contains information related to “Assets” and appears to be
 organized as follows:
@@ -464,9 +466,11 @@ print(assets_fact$units$USD)
     ## 117 2022-09-24 3.52755e+11 0000320193-23-000006 2023 Q1   10-Q 2023-02-03
     ## 118 2022-09-24 3.52755e+11 0000320193-23-000064 2023 Q2   10-Q 2023-05-05
     ## 119 2022-09-24 3.52755e+11 0000320193-23-000077 2023 Q3   10-Q 2023-08-04
-    ## 120 2022-12-31 3.46747e+11 0000320193-23-000006 2023 Q1   10-Q 2023-02-03
-    ## 121 2023-04-01 3.32160e+11 0000320193-23-000064 2023 Q2   10-Q 2023-05-05
-    ## 122 2023-07-01 3.35038e+11 0000320193-23-000077 2023 Q3   10-Q 2023-08-04
+    ## 120 2022-09-24 3.52755e+11 0000320193-23-000106 2023 FY   10-K 2023-11-03
+    ## 121 2022-12-31 3.46747e+11 0000320193-23-000006 2023 Q1   10-Q 2023-02-03
+    ## 122 2023-04-01 3.32160e+11 0000320193-23-000064 2023 Q2   10-Q 2023-05-05
+    ## 123 2023-07-01 3.35038e+11 0000320193-23-000077 2023 Q3   10-Q 2023-08-04
+    ## 124 2023-09-30 3.52583e+11 0000320193-23-000106 2023 FY   10-K 2023-11-03
     ##         frame
     ## 1        <NA>
     ## 2        <NA>
@@ -586,10 +590,12 @@ print(assets_fact$units$USD)
     ## 116      <NA>
     ## 117      <NA>
     ## 118      <NA>
-    ## 119 CY2022Q3I
-    ## 120 CY2022Q4I
-    ## 121 CY2023Q1I
-    ## 122 CY2023Q2I
+    ## 119      <NA>
+    ## 120 CY2022Q3I
+    ## 121 CY2022Q4I
+    ## 122 CY2023Q1I
+    ## 123 CY2023Q2I
+    ## 124 CY2023Q3I
 
 The following are the list of the Facts in the us-gaap section:
 
@@ -635,7 +641,7 @@ print(names_us_gaap)
 cat("The number of Facts in us-gaap section is:", length(company_Facts$facts$`us-gaap`))
 ```
 
-    ## The number of Facts in us-gaap section is: 494
+    ## The number of Facts in us-gaap section is: 498
 
 The following are the list of the Facts in the deo section:
 
@@ -725,6 +731,7 @@ print(company_Facts$facts$dei$EntityCommonStockSharesOutstanding$units$shares)
     ## 56 2023-01-20 15821946000 0000320193-23-000006 2023 Q1   10-Q 2023-02-03
     ## 57 2023-04-21 15728702000 0000320193-23-000064 2023 Q2   10-Q 2023-05-05
     ## 58 2023-07-21 15634232000 0000320193-23-000077 2023 Q3   10-Q 2023-08-04
+    ## 59 2023-10-20 15552752000 0000320193-23-000106 2023 FY   10-K 2023-11-03
     ##        frame
     ## 1  CY2009Q2I
     ## 2       <NA>
@@ -784,6 +791,7 @@ print(company_Facts$facts$dei$EntityCommonStockSharesOutstanding$units$shares)
     ## 56 CY2022Q4I
     ## 57 CY2023Q1I
     ## 58 CY2023Q2I
+    ## 59 CY2023Q3I
 
 ``` r
 # Print an example element
@@ -813,6 +821,7 @@ print(company_Facts$facts$dei$EntityPublicFloat$units$USD)
     ## 14 2020-03-27 1.070633e+12 0000320193-20-000096 2020 FY   10-K 2020-10-30
     ## 15 2021-03-26 2.021360e+12 0000320193-21-000105 2021 FY   10-K 2021-10-29
     ## 16 2022-03-25 2.830067e+12 0000320193-22-000108 2022 FY   10-K 2022-10-28
+    ## 17 2023-03-31 2.591165e+12 0000320193-23-000106 2023 FY   10-K 2023-11-03
     ##        frame
     ## 1       <NA>
     ## 2       <NA>
@@ -830,3 +839,4 @@ print(company_Facts$facts$dei$EntityPublicFloat$units$USD)
     ## 14 CY2020Q1I
     ## 15 CY2021Q1I
     ## 16 CY2022Q1I
+    ## 17 CY2023Q1I
