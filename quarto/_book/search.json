@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "index.html#purpose-of-this-project",
+    "href": "index.html#purpose-of-this-project",
+    "title": "Business Analysis Using SEC Data of Public Companies",
+    "section": "1.1 Purpose of this Project",
+    "text": "1.1 Purpose of this Project\nThe primary purpose of this project is to retrieve company data from SEC filings and analyze it for educational and research purposes. Please note that the scripts provided here are not intended for making investment decisions, and their use is at your own risk."
+  },
+  {
+    "objectID": "index.html#disclaimer",
+    "href": "index.html#disclaimer",
+    "title": "Business Analysis Using SEC Data of Public Companies",
+    "section": "1.2 Disclaimer",
+    "text": "1.2 Disclaimer\nThis financial data retrieval code is provided for informational purposes only, and we make no warranties regarding the accuracy, completeness, or timeliness of the data. It should not be considered financial advice, and users should consult with qualified professionals for personalized guidance. Data is obtained from various sources, including the SEC, and we do not guarantee its accuracy or availability. Users are responsible for assessing and managing risks associated with the financial data. We are not liable for any damages arising from the use of this data or code. Redistribution, resale, or republication of the data without authorization is prohibited. This disclaimer is subject to change, and users are responsible for staying updated. It is not legal advice, and compliance with applicable laws and regulations is the user’s responsibility."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Business Analysis Using SEC Data of Public Companies",
+    "section": "",
+    "text": "1 Introduction and Overview"
+  },
+  {
+    "objectID": "data_retrieval.html",
+    "href": "data_retrieval.html",
+    "title": "Business Analysis Using SEC Data of Public Companies",
+    "section": "",
+    "text": "title: “Data Retrieval”"
+  },
+  {
+    "objectID": "data_retrieval.html#introduction",
+    "href": "data_retrieval.html#introduction",
+    "title": "2  Data Retrieval",
+    "section": "2.1 Introduction",
+    "text": "2.1 Introduction\nIn this chapter, we’ll dive into the process of retrieving financial data from the U.S. Securities and Exchange Commission (SEC) filings. The financial data retrieved will be used for educational and research purposes. It’s essential to note that the scripts provided here are not intended for making investment decisions, and their use is at your own risk.\n\n2.1.1 Prerequisites\nBefore we get started, make sure you have the required R libraries installed. You can install them using the following commands:\n\nlibrary(tidyverse)\nlibrary(httr)\nlibrary(jsonlite)"
+  },
+  {
+    "objectID": "data_retrieval.html#sec-import-libraries",
+    "href": "data_retrieval.html#sec-import-libraries",
+    "title": "2  Data Retrieval",
+    "section": "2.1 Import Required Libraries",
+    "text": "2.1 Import Required Libraries\nIn this chapter, we will explore the process of retrieving financial data from the U.S. Securities and Exchange Commission (SEC) filings. To do this, we will use R and several libraries that facilitate data retrieval and analysis.\nTo start, we need to import the required libraries. These libraries provide functions and tools that enable us to interact with the SEC’s data and perform data analysis.\n\nlibrary(tidyverse)  # A collection of packages for data manipulation and visualization\nlibrary(httr)       # An R interface to the 'curl' package, allowing HTTP requests\nlibrary(jsonlite)   # A lightweight JSON encoder and decoder for R"
+  },
+  {
+    "objectID": "data_retrieval.html#sourcing-required-files",
+    "href": "data_retrieval.html#sourcing-required-files",
+    "title": "2  Data Retrieval",
+    "section": "2.2 Sourcing Required Files",
+    "text": "2.2 Sourcing Required Files\nThe data retrieval process is orchestrated using a set of functions located in separate R script files. We’ll be sourcing these files in the main script (main_script.R) to access the functions for retrieving, processing, and analyzing SEC data.\nLet’s start by sourcing these files in your main_script.R. Here’s how you can do it:\n\nsource(\"../code/Functions/data_retrieval.R\")   # Sourcing the data retrieval functions\nsource(\"../code/Functions/data_analysis.R\")    # Sourcing the data analysis functions\nsource(\"../code/Functions/data_visualization.R\")  # Sourcing the data visualization functions\nsource(\"../code/Functions/utils.R\")           # Sourcing utility functions\n\nThis sets the stage for retrieving and working with SEC data efficiently."
+  },
+  {
+    "objectID": "data_retrieval.html#sec-retrieve-data",
+    "href": "data_retrieval.html#sec-retrieve-data",
+    "title": "2  Data Retrieval",
+    "section": "2.3 Retrieve Data from SEC",
+    "text": "2.3 Retrieve Data from SEC\nNow that we have imported the necessary libraries and sourced the required files, we can move on to retrieving financial data from the SEC. In this example, we will focus on one company, Apple Inc. (AAPL), as the target for our data retrieval.\n\n2.3.1 Define User Headers\nTo access the SEC API, we need to define user headers. These headers will be used for making HTTP requests to the SEC servers. We can set our user agent as an example:\n\n# Define user headers\nheaders &lt;- c('User-Agent' = 'email@address.com')\nprint(headers)\n\n         User-Agent \n\"email@address.com\" \n\n\nIt’s essential to set user headers as a standard practice when accessing web APIs to identify the source of the requests."
+  },
+  {
+    "objectID": "data_retrieval.html#retrieve-company-list",
+    "href": "data_retrieval.html#retrieve-company-list",
+    "title": "2  Data Retrieval",
+    "section": "2.4 Retrieve Company List",
+    "text": "2.4 Retrieve Company List\nOur first step in data retrieval is to obtain the list of companies available on the SEC. This list contains essential information, including the Central Index Key (CIK), which uniquely identifies each company that files reports with the SEC. We’ll make an HTTP request to fetch this list:\n\n# Retrieve company list\ncompany_List &lt;- retrieve_Company_List(headers)\n\nNo encoding supplied: defaulting to UTF-8.\n\nhead(company_List)\n\n     cik_str ticker                title\n0 0000320193   AAPL           Apple Inc.\n1 0000789019   MSFT       MICROSOFT CORP\n2 0001652044  GOOGL        Alphabet Inc.\n3 0001018724   AMZN       AMAZON COM INC\n4 0001045810   NVDA          NVIDIA CORP\n5 0001326801   META Meta Platforms, Inc."
+  },
+  {
+    "objectID": "data_retrieval.html#sec-company-list",
+    "href": "data_retrieval.html#sec-company-list",
+    "title": "2  Data Retrieval",
+    "section": "2.4 Retrieve Company List",
+    "text": "2.4 Retrieve Company List\nOur first step in data retrieval is to obtain the list of companies available on the SEC. This list contains essential information, including the Central Index Key (CIK), which uniquely identifies each company that files reports with the SEC. We’ll make an HTTP request to fetch this list:\n\n# Retrieve company list\ncompany_List &lt;- retrieve_Company_List(headers)\n\nNo encoding supplied: defaulting to UTF-8.\n\nhead(company_List)\n\n     cik_str ticker                title\n0 0000320193   AAPL           Apple Inc.\n1 0000789019   MSFT       MICROSOFT CORP\n2 0001652044  GOOGL        Alphabet Inc.\n3 0001018724   AMZN       AMAZON COM INC\n4 0001045810   NVDA          NVIDIA CORP\n5 0001326801   META Meta Platforms, Inc."
+  },
+  {
+    "objectID": "data_retrieval.html#selecting-a-company-apple-inc.-aapl",
+    "href": "data_retrieval.html#selecting-a-company-apple-inc.-aapl",
+    "title": "2  Data Retrieval",
+    "section": "2.5 Selecting a Company: Apple Inc. (AAPL)",
+    "text": "2.5 Selecting a Company: Apple Inc. (AAPL)\nFor our analysis, we’ll use Apple Inc. (AAPL) as the company of interest. The CIK for Apple Inc. is 0000320193.\nLet’s now select Apple Inc. by its CIK and retrieve its data from the SEC. The data we retrieve will be stored in the company_Data object for further analysis:\n\n# Select Apple Inc. (AAPL) by CIK\ncik &lt;- \"0000320193\"  # CIK for Apple Inc.\ncompany_Data &lt;- retrieve_Company_Data(headers, cik)\n\nNo encoding supplied: defaulting to UTF-8.\nNo encoding supplied: defaulting to UTF-8.\nNo encoding supplied: defaulting to UTF-8.\n\n# this the first row of the company list as a quick check\ncompany_List[1,] %&gt;% print()\n\n     cik_str ticker      title\n0 0000320193   AAPL Apple Inc.\n\n\nBy following these steps, we’ve imported the necessary libraries, sourced relevant files, and initiated the retrieval of financial data from the SEC. In the subsequent chapters, we will delve deeper into exploring and analyzing the SEC data for Apple Inc."
+  }
+]
